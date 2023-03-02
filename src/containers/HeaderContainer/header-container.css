@@ -1,0 +1,9 @@
+#header {
+  top: -100px;
+  transition: top 0.5s ease-in-out;
+}
+
+#header.sticky {
+  position: sticky;
+  top: 0;
+}
