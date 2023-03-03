@@ -1,4 +1,8 @@
-import { FETCH_SINGLE_PRODUCT_FAILURE, FETCH_SINGLE_PRODUCT_SUCCESS } from '../actions/types'
+import {
+  FETCH_SINGLE_PRODUCT_FAILURE,
+  FETCH_SINGLE_PRODUCT_REQUEST,
+  FETCH_SINGLE_PRODUCT_SUCCESS
+} from '../actions/types'
 
 import { makeAsyncAction } from './makeAsyncAction'
 
@@ -6,6 +10,7 @@ export const fetchProduct = productId => {
   return dispatch => {
     return makeAsyncAction(dispatch, {
       api: async () => {
+        dispatch({ type: FETCH_SINGLE_PRODUCT_REQUEST })
         let apiUrl = `https://fakestoreapi.com/products/${productId}`
         const response = await fetch(apiUrl)
         return await response.json()

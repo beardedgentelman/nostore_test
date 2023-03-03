@@ -1,0 +1,9 @@
+#aside {
+  top: -180px;
+  transition: top 0.5s ease-in-out;
+}
+
+#aside.sticky {
+  position: sticky;
+  top: 80px;
+}

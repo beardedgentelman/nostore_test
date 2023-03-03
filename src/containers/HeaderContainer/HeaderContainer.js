@@ -13,10 +13,12 @@ const HeaderContainer = props => {
       }
 
       timeout = setTimeout(() => {
-        if (scroll >= window.scrollY && window.scrollY > 10) {
-          document.getElementById('header').classList.add('sticky')
+        if (window.scrollY > 100) {
+          document.getElementById('header')?.classList.add('sticky')
+          document.getElementById('aside')?.classList.add('sticky')
         } else {
-          document.getElementById('header').classList.remove('sticky')
+          document.getElementById('header')?.classList.remove('sticky')
+          document.getElementById('aside')?.classList.remove('sticky')
         }
 
         scroll = window.scrollY
@@ -31,7 +33,7 @@ const HeaderContainer = props => {
   return (
     <header
       id='header'
-      className='bg-slate-900 text-fuchsia-50 text-xl w-full h-[80px] py-2 px-4 flex-shrink-0 flex items-center justify-center z-10'
+      className='bg-slate-900 text-fuchsia-50 text-xl w-full h-[80px] py-2 px-4 flex-shrink-0 flex items-center justify-center z-20'
     >
       <div className='w-full flex items-center justify-between container'>{props.children}</div>
     </header>

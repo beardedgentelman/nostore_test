@@ -1,4 +1,8 @@
-import { FETCH_SINGLE_PRODUCT_FAILURE, FETCH_SINGLE_PRODUCT_SUCCESS } from '../actions/types'
+import {
+  FETCH_SINGLE_PRODUCT_FAILURE,
+  FETCH_SINGLE_PRODUCT_REQUEST,
+  FETCH_SINGLE_PRODUCT_SUCCESS
+} from '../actions/types'
 
 const initialState = {
   loading: false,
@@ -8,6 +12,12 @@ const initialState = {
 
 const productSingleReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_SINGLE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
     case FETCH_SINGLE_PRODUCT_SUCCESS:
       return {
         ...state,

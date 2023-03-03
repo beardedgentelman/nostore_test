@@ -9,6 +9,8 @@ import classNames from 'classnames'
 
 import { ProductCard } from 'components'
 
+import './productsPage.css'
+
 const ProductsPage = () => {
   const dispatch = useDispatch()
   const products = useSelector(state => state.products.products)
@@ -66,9 +68,9 @@ const ProductsPage = () => {
     <article className='flex flex-col pb-40'>
       {loading ? (
         <div className='text-lg font-bold text-black'>Loading...</div>
-      ) : (
+      ) : products ? (
         <div className='flex flex-col'>
-          <aside className='w-full border-b-4 border-yellow-400 py-2 px-4 bg-slate-500'>
+          <aside id='aside' className='w-full border-b-4 border-yellow-400 py-2 px-4 bg-slate-500 z-10'>
             <div className='flex items-center gap-8 justify-center mx-auto container'>
               <div className='flex items-center gap-2'>
                 <h4 className='text-lg text-fuchsia-50'>Категорії: </h4>
@@ -225,6 +227,8 @@ const ProductsPage = () => {
                 ))}
           </section>
         </div>
+      ) : (
+        <div className='text-lg font-bold text-red-500'>Failed to fetch products</div>
       )}
     </article>
   )
