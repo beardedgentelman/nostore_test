@@ -10,9 +10,9 @@ import App from './App'
 
 import './index.css'
 
-window.addEventListener('beforeunload', () => {
-  store.dispatch(clearStore())
-})
+// window.addEventListener('beforeunload', () => {
+//   store.dispatch(clearStore())
+// })
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const userIcon = (
   <svg
@@ -30,48 +30,57 @@ const cartIcon = (
 )
 
 const HeaderNav = props => {
-  const [isAuth, setIsAuth] = useState(true)
   const activeLink = 'text-sm hover:text-yellow-400 transition-all underline underline-offset-4'
   const nonActiveLink = 'text-sm hover:text-yellow-400 transition-all'
 
   const navClass = ({ isActive }) => (isActive ? activeLink : nonActiveLink)
 
+  const { loginWithRedirect, logout, user, isLoading } = useAuth0()
+
   return (
     <nav className=''>
-      {isAuth ? (
-        <ul className='flex items-center'>
-          <li className='mx-1 flex items-center '>
-            <NavLink className={navClass} to='/products'>
-              Список товарів
-            </NavLink>
-          </li>
-          <li className='mx-1 flex items-center '>
-            <NavLink to='/user_page'>{userIcon}</NavLink>
-          </li>
-          <li className='mx-1 flex items-center relative'>
-            <NavLink to='/cart'>
-              {cartIcon}
-              {props.cartQuantity ? (
-                <span className='flex items-center justify-center w-4 h-4 rounded-full bg-green-400 absolute top-0 right-[-5px] text-[10px] font-bold text-gray-900'>
-                  {props.cartQuantity}
-                </span>
-              ) : null}
-            </NavLink>
-          </li>
-        </ul>
-      ) : (
-        <ul className='flex items-center'>
-          <li className='mx-1 flex items-center '>
-            <NavLink className={navClass} to='/log_in'>
-              Увійти
-            </NavLink>
-            <span className='mx-1 flex items-center '>/</span>
-            <NavLink className={navClass} to='/sign_up'>
-              Зареєструватися
-            </NavLink>
-          </li>
-        </ul>
-      )}
+      <ul className='flex items-center gap-4'>
+        {!isLoading && !user && (
+          <>
+            <button
+              className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
+              onClick={() => loginWithRedirect()}
+            >
+              Увійти або Зареєструватися
+            </button>
+          </>
+        )}
+        {!isLoading && user && (
+          <>
+            <li className='mx-1 flex items-center '>
+              <NavLink className={navClass} to='/products'>
+                Список товарів
+              </NavLink>
+            </li>
+            <li className='mx-1 flex items-center '>
+              <NavLink to='/user_page'>
+                {user ? <img className='rounded-full w-12 h-12' src={user.picture} alt={user.name} /> : { userIcon }}
+              </NavLink>
+            </li>
+            <li className='mx-1 flex items-center relative'>
+              <NavLink to='/cart'>
+                {cartIcon}
+                {props.cartQuantity ? (
+                  <span className='flex items-center justify-center w-4 h-4 rounded-full bg-green-400 absolute top-0 right-[-5px] text-[10px] font-bold text-gray-900'>
+                    {props.cartQuantity}
+                  </span>
+                ) : null}
+              </NavLink>
+            </li>
+            <button
+              className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
+              onClick={() => logout()}
+            >
+              Вийти
+            </button>
+          </>
+        )}
+      </ul>
     </nav>
   )
 }

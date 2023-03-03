@@ -1,3 +1,5 @@
+import { getAllProducts } from 'api/produtsApi'
+
 import { makeAsyncAction } from './makeAsyncAction'
 import { FETCH_PRODUCTS_FAILURE, FETCH_PRODUCTS_REQUEST, FETCH_PRODUCTS_SUCCESS } from './types'
 
@@ -6,7 +8,7 @@ export const fetchProducts = () => {
     return makeAsyncAction(dispatch, {
       api: async () => {
         dispatch({ type: FETCH_PRODUCTS_REQUEST })
-        let apiUrl = 'https://fakestoreapi.com/products'
+        let apiUrl = getAllProducts()
         const response = await fetch(apiUrl)
         return await response.json()
       },
