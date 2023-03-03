@@ -1,16 +1,17 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { addToCart } from 'actions/cartAction'
 import { fetchProduct } from 'actions/productSingleAction'
 
 const SingleProduct = () => {
-  const { productId } = useParams()
   const dispatch = useDispatch()
   const product = useSelector(state => state.product.product)
   const loading = useSelector(state => state.product.loading)
+  const { productId } = useParams()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    console.log(productId)
     dispatch(fetchProduct(productId))
   }, [dispatch, productId])
 
@@ -18,11 +19,15 @@ const SingleProduct = () => {
     dispatch(addToCart(item))
   }
 
+  const handleCloseTab = () => {
+    window.close()
+  }
+
   return (
     <>
       {loading ? (
         <div className='text-lg font-bold text-black'>Loading...</div>
-      ) : (
+      ) : product ? (
         <section className='flex items-start justify-start gap-10 px-20 pt-20 pb-40 container mx-auto'>
           <div className='p-5 border rounded w-1/3 flex items-center justify-center'>
             <img src={product.image} alt={product.title} className='w-full max-w-xs' />
@@ -41,7 +46,10 @@ const SingleProduct = () => {
             <p className='text-xl my-1 text-start'>{product.description}</p>
             <div className='flex items-center justify-between'>
               <Link to={`/products`}>
-                <button className='py-4 px-8 mк-auto w-fit border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'>
+                <button
+                  onClick={() => handleCloseTab()}
+                  className='py-4 px-8 mк-auto w-fit border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'
+                >
                   Назад
                 </button>
               </Link>
@@ -54,6 +62,8 @@ const SingleProduct = () => {
             </div>
           </div>
         </section>
+      ) : (
+        <div className='text-lg font-bold text-red-500'>Failed to fetch product</div>
       )}
     </>
   )

@@ -4,9 +4,10 @@ import { makeAsyncAction } from './makeAsyncAction'
 
 export const fetchProduct = productId => {
   return dispatch => {
-    makeAsyncAction(dispatch, {
+    return makeAsyncAction(dispatch, {
       api: async () => {
-        const response = await fetch(`https://fakestoreapi.com/products/${productId}`)
+        let apiUrl = `https://fakestoreapi.com/products/${productId}`
+        const response = await fetch(apiUrl)
         return await response.json()
       },
       successActions: [fetchProductSuccess],

@@ -3,7 +3,7 @@ import { FETCH_PRODUCTS_FAILURE, FETCH_PRODUCTS_SUCCESS } from './types'
 
 export const fetchProducts = () => {
   return dispatch => {
-    makeAsyncAction(dispatch, {
+    return makeAsyncAction(dispatch, {
       api: async () => {
         let apiUrl = 'https://fakestoreapi.com/products'
         const response = await fetch(apiUrl)
