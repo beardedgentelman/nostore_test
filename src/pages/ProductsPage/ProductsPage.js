@@ -195,7 +195,7 @@ const ProductsPage = () => {
                         >
                           До кошика
                         </button>
-                        <Link to={`/products/${product.id}`} target='_blank'>
+                        <Link to={`/products/${product.id}`}>
                           <button className='py-2 px-4 border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'>
                             Опис
                           </button>
@@ -216,7 +216,7 @@ const ProductsPage = () => {
                         >
                           До кошика
                         </button>
-                        <Link to={`/products/${product.id}`} target='_blank'>
+                        <Link to={`/products/${product.id}`}>
                           <button className='py-2 px-4 border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'>
                             Опис
                           </button>

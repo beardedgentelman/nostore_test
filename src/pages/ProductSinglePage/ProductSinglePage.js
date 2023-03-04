@@ -10,8 +10,9 @@ const SingleProduct = () => {
   const loading = useSelector(state => state.product.loading)
   const { productId } = useParams()
 
+  console.log(product)
+
   useLayoutEffect(() => {
-    console.log(productId)
     dispatch(fetchProduct(productId))
   }, [dispatch, productId])
 

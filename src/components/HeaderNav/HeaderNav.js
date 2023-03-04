@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -29,13 +30,20 @@ const cartIcon = (
   </svg>
 )
 
-const HeaderNav = props => {
+const HeaderNav = () => {
+  const [cartQuantity, setCartQuantity] = useState(0)
   const activeLink = 'text-sm hover:text-yellow-400 transition-all underline underline-offset-4'
   const nonActiveLink = 'text-sm hover:text-yellow-400 transition-all'
 
   const navClass = ({ isActive }) => (isActive ? activeLink : nonActiveLink)
 
   const { loginWithRedirect, logout, user, isLoading } = useAuth0()
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart'))
+    const quantity = cart ? cart.length : 0
+    setCartQuantity(quantity)
+  }, [localStorage.getItem('cart')])
 
   return (
     <nav className=''>
@@ -65,9 +73,9 @@ const HeaderNav = props => {
             <li className='mx-1 flex items-center relative'>
               <NavLink to='/cart'>
                 {cartIcon}
-                {props.cartQuantity ? (
+                {cartQuantity ? (
                   <span className='flex items-center justify-center w-4 h-4 rounded-full bg-green-400 absolute top-0 right-[-5px] text-[10px] font-bold text-gray-900'>
-                    {props.cartQuantity}
+                    {cartQuantity}
                   </span>
                 ) : null}
               </NavLink>
