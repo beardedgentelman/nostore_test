@@ -9,7 +9,7 @@ const ProductCard = props => {
     <div
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      className='w-full max-w-xs py-2 px-4 flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'
+      className='w-full max-w-xs h-[480px] py-2 px-4 flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'
     >
       <span className='text-sm ml-auto'>★{props.product.rating.rate}</span>
       <div className='w-full h-60 overflow-hidden my-1 p-4'>
