@@ -5,6 +5,8 @@ import { clearStore } from 'actions/clearStoreAction'
 import Auth0ProviderWithHistory from 'auth/auth0Provider'
 import { FooterContainer, HeaderContainer, MainContainer } from 'containers'
 import { CartPage, MainPage, ProductSinglePage, ProductsPage, ProfilePage } from 'pages'
+import { AuthRoute } from 'utiles/AuthRoute'
+import { PrivateRoute } from 'utiles/PrivateRoute'
 
 import { HeaderLogo, HeaderNav } from 'components'
 
@@ -32,11 +34,15 @@ function App() {
         </HeaderContainer>
         <MainContainer>
           <Routes>
+            {/* <Route element={<PrivateRoute />}> */}
             <Route path='/' element={<MainPage />} />
             <Route path='/products' element={<ProductsPage type='products' />} />
-            <Route path='/products/:productId' element={<ProductSinglePage type='products' />} />
             <Route path='/user_page' element={<ProfilePage type='user' />} />
             <Route path='/cart' element={<CartPage type='user' />} />
+            {/* </Route> */}
+            {/* <Route element={<AuthRoute />}> */}
+            <Route path='/products/:productId' element={<ProductSinglePage type='products' />} />
+            {/* </Route> */}
           </Routes>
         </MainContainer>
         <FooterContainer></FooterContainer>
