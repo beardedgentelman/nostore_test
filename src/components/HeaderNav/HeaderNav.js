@@ -45,6 +45,31 @@ const HeaderNav = () => {
     setCartQuantity(quantity)
   }, [localStorage.getItem('cart')])
 
+  useEffect(() => {
+    if (user) {
+      window.addEventListener('beforeunload', handleBeforeUnload)
+
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload)
+      }
+    }
+  }, [user])
+
+  const handleBeforeUnload = e => {
+    e.preventDefault()
+    const confirmationMessage = 'Are you sure you want to leave the page?'
+    e.returnValue = confirmationMessage
+    return confirmationMessage
+  }
+
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?')
+
+    if (shouldLogout) {
+      logout({ returnTo: window.location.origin })
+    }
+  }
+
   return (
     <nav className=''>
       <ul className='flex items-center gap-4'>
@@ -82,7 +107,7 @@ const HeaderNav = () => {
             </li>
             <button
               className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
-              onClick={() => logout()}
+              onClick={() => handleLogout()}
             >
               Вийти
             </button>

@@ -8,7 +8,6 @@ const initialState = {
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      console.log(state)
       const existingItem = state.items.find(item => item.id === action.payload.id)
       if (existingItem) {
         return {
@@ -17,7 +16,6 @@ export const cartReducer = (state = initialState, action) => {
         }
       } else {
         const newItems = [...state.items, { ...action.payload, quantity: 1 }]
-        console.log(newItems)
         localStorage.setItem('cart', JSON.stringify(newItems))
         return {
           ...state,
@@ -26,10 +24,8 @@ export const cartReducer = (state = initialState, action) => {
         }
       }
     case REMOVE_FROM_CART:
-      console.log(state)
       const updatedItems = state.items.filter(item => item.id !== action.payload)
       localStorage.setItem('cart', JSON.stringify(updatedItems))
-      console.log(updatedItems)
       return {
         ...state,
         items: updatedItems
