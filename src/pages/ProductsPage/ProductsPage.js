@@ -3,6 +3,8 @@ import { CgArrowDown, CgArrowUp } from 'react-icons/cg'
 import { ImCross } from 'react-icons/im'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Popup from 'reactjs-popup'
+import { useAuth0 } from '@auth0/auth0-react'
 import { addToCart } from 'actions/cartAction'
 import { fetchProducts } from 'actions/productsAllAction'
 import classNames from 'classnames'
@@ -23,6 +25,7 @@ const ProductsPage = () => {
   const [ratingSortOrder, setRatingSortOrder] = useState(null)
   const [isPriceHover, setIsPriceHover] = useState(false)
   const [isRatingHover, setIsRatingHover] = useState(false)
+  const { user, loginWithRedirect } = useAuth0()
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -57,6 +60,14 @@ const ProductsPage = () => {
     })
   }
 
+  const windowTopScroll = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
+
   const handleAddToCart = item => {
     dispatch(addToCart(item))
   }
@@ -81,7 +92,10 @@ const ProductsPage = () => {
                         btnClass,
                         selectedCategory === null ? 'bg-gray-400 text-fuchsia-50' : 'bg-white'
                       )}
-                      onClick={() => setSelectedCategory(null)}
+                      onClick={() => {
+                        setSelectedCategory(null)
+                        windowTopScroll()
+                      }}
                     >
                       Показати усі товари
                     </button>
@@ -94,7 +108,10 @@ const ProductsPage = () => {
                             btnClass,
                             selectedCategory === category ? 'bg-gray-400 text-fuchsia-50' : 'bg-white'
                           )}
-                          onClick={() => setSelectedCategory(category)}
+                          onClick={() => {
+                            setSelectedCategory(category)
+                            windowTopScroll()
+                          }}
                         >
                           {category}
                         </button>
@@ -119,6 +136,7 @@ const ProductsPage = () => {
                     setIsRatingSort(false)
                     setRatingSortOrder(null)
                     setIsPriceSort(true)
+                    windowTopScroll()
                   }}
                   onMouseEnter={() => setIsPriceHover(true)}
                   onMouseLeave={() => setIsPriceHover(false)}
@@ -138,6 +156,7 @@ const ProductsPage = () => {
                     setPriceSortOrder(null)
                     setIsRatingSort(false)
                     setRatingSortOrder(null)
+                    windowTopScroll()
                   }}
                 />
               </div>
@@ -157,6 +176,7 @@ const ProductsPage = () => {
                     setIsPriceSort(false)
                     setPriceSortOrder(null)
                     setIsRatingSort(true)
+                    windowTopScroll()
                   }}
                   onMouseEnter={() => setIsRatingHover(true)}
                   onMouseLeave={() => setIsRatingHover(false)}
@@ -176,6 +196,7 @@ const ProductsPage = () => {
                     setPriceSortOrder(null)
                     setIsRatingSort(false)
                     setRatingSortOrder(null)
+                    windowTopScroll()
                   }}
                 />
               </div>
@@ -189,12 +210,34 @@ const ProductsPage = () => {
                     product={product}
                     buttons={
                       <div className='w-full flex items-center justify-center gap-2'>
-                        <button
-                          onClick={() => handleAddToCart(product)}
-                          className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
-                        >
-                          До кошика
-                        </button>
+                        {user ? (
+                          <button
+                            onClick={() => handleAddToCart(product)}
+                            className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
+                          >
+                            До кошика
+                          </button>
+                        ) : (
+                          <Popup
+                            trigger={
+                              <button className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'>
+                                До кошика
+                              </button>
+                            }
+                            position='top center'
+                            nested
+                          >
+                            <div className='flex flex-wrap max-w-xs gap-1 p-4 rounded-lg bg-slate-900 text-fuchsia-50'>
+                              <h4 className='text-lg'>Щоб додати товар до кошика, Вам потрібно</h4>
+                              <button
+                                className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
+                                onClick={() => loginWithRedirect()}
+                              >
+                                Увійти або Зареєструватися
+                              </button>
+                            </div>
+                          </Popup>
+                        )}
                         <Link to={`/products/${product.id}`}>
                           <button className='py-2 px-4 border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'>
                             Опис

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Popup from 'reactjs-popup'
@@ -14,7 +14,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
-import mainBanner from '../../assets/img/main-banner.webp'
+import mainBanner from './../../assets/img/main-banner.webp'
 
 import 'swiper/css'
 import 'animate.css'

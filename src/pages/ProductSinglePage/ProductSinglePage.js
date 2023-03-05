@@ -1,6 +1,8 @@
 import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+import Popup from 'reactjs-popup'
+import { useAuth0 } from '@auth0/auth0-react'
 import { addToCart } from 'actions/cartAction'
 import { fetchProduct } from 'actions/productSingleAction'
 
@@ -9,8 +11,7 @@ const SingleProduct = () => {
   const product = useSelector(state => state.product.product)
   const loading = useSelector(state => state.product.loading)
   const { productId } = useParams()
-
-  console.log(product)
+  const { user, loginWithRedirect } = useAuth0()
 
   useLayoutEffect(() => {
     dispatch(fetchProduct(productId))
@@ -54,12 +55,34 @@ const SingleProduct = () => {
                   Назад
                 </button>
               </Link>
-              <button
-                onClick={() => handleAddToCart(product)}
-                className='py-4 px-8 ml-auto w-fit border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
-              >
-                До кошика
-              </button>
+              {user ? (
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
+                >
+                  До кошика
+                </button>
+              ) : (
+                <Popup
+                  trigger={
+                    <button className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'>
+                      До кошика
+                    </button>
+                  }
+                  position='top center'
+                  nested
+                >
+                  <div className='flex flex-wrap max-w-xs gap-1 p-4 rounded-lg bg-slate-900 text-fuchsia-50'>
+                    <h4 className='text-lg'>Щоб додати товар до кошика, Вам потрібно</h4>
+                    <button
+                      className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
+                      onClick={() => loginWithRedirect()}
+                    >
+                      Увійти або Зареєструватися
+                    </button>
+                  </div>
+                </Popup>
+              )}
             </div>
           </div>
         </section>

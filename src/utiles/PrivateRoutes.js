@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export const PrivateRoutes = () => {
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, loginWithRedirect } = useAuth0()
 
-  return isAuthenticated ? <Outlet /> : <Navigate to='/' replace />
+  return isAuthenticated ? <Outlet /> : loginWithRedirect({ screen_hint: 'signup' })
 }

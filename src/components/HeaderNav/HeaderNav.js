@@ -31,6 +31,7 @@ const cartIcon = (
 )
 
 const HeaderNav = () => {
+  const cart = JSON.parse(localStorage.getItem('cart'))
   const [cartQuantity, setCartQuantity] = useState(0)
   const activeLink = 'text-sm hover:text-yellow-400 transition-all underline underline-offset-4'
   const nonActiveLink = 'text-sm hover:text-yellow-400 transition-all'
@@ -40,27 +41,26 @@ const HeaderNav = () => {
   const { loginWithRedirect, logout, user, isLoading } = useAuth0()
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart'))
     const quantity = cart ? cart.length : 0
     setCartQuantity(quantity)
   }, [localStorage.getItem('cart')])
 
   useEffect(() => {
-    if (user) {
+    if (user && cart && cart.length > 0) {
+      const handleBeforeUnload = e => {
+        e.preventDefault()
+        const confirmationMessage = 'Are you sure you want to leave the page?'
+        e.returnValue = confirmationMessage
+        return confirmationMessage
+      }
+
       window.addEventListener('beforeunload', handleBeforeUnload)
 
       return () => {
         window.removeEventListener('beforeunload', handleBeforeUnload)
       }
     }
-  }, [user])
-
-  const handleBeforeUnload = e => {
-    e.preventDefault()
-    const confirmationMessage = 'Are you sure you want to leave the page?'
-    e.returnValue = confirmationMessage
-    return confirmationMessage
-  }
+  }, [user, cart])
 
   const handleLogout = () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?')
@@ -107,7 +107,7 @@ const HeaderNav = () => {
             </li>
             <button
               className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
-              onClick={() => handleLogout()}
+              onClick={() => (!cart ? handleLogout() : logout({ returnTo: window.location.origin }))}
             >
               Вийти
             </button>

@@ -35,10 +35,10 @@ function App() {
           <Routes>
             <Route path='/' element={<MainPage />} exact />
             <Route element={<PrivateRoutes />}>
-              <Route path='/products' element={<ProductsPage type='products' />} />
               <Route path='/user_page' element={<ProfilePage type='user' />} />
               <Route path='/cart' element={<CartPage type='user' />} />
             </Route>
+            <Route path='/products' element={<ProductsPage type='products' />} />
             <Route path='/products/:productId' element={<ProductSinglePage type='products' />} />
           </Routes>
         </MainContainer>
