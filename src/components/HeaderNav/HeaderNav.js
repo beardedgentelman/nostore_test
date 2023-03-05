@@ -75,6 +75,11 @@ const HeaderNav = () => {
       <ul className='flex items-center gap-4'>
         {!isLoading && !user && (
           <>
+            <li className='mx-1 flex items-center '>
+              <NavLink className={navClass} to='/products'>
+                Список товарів
+              </NavLink>
+            </li>
             <button
               className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
               onClick={() => loginWithRedirect()}
