@@ -253,12 +253,34 @@ const ProductsPage = () => {
                     product={product}
                     buttons={
                       <div className='w-full flex items-center justify-center gap-2'>
-                        <button
-                          className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
-                          onClick={() => handleAddToCart(product)}
-                        >
-                          До кошика
-                        </button>
+                        {user ? (
+                          <button
+                            onClick={() => handleAddToCart(product)}
+                            className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'
+                          >
+                            До кошика
+                          </button>
+                        ) : (
+                          <Popup
+                            trigger={
+                              <button className='py-2 px-4 border rounded text-fuchsia-50 bg-blue-500 hover:bg-blue-700 transition-all'>
+                                До кошика
+                              </button>
+                            }
+                            position='top center'
+                            nested
+                          >
+                            <div className='flex flex-wrap max-w-xs gap-1 p-4 rounded-lg bg-slate-900 text-fuchsia-50'>
+                              <h4 className='text-lg'>Щоб додати товар до кошика, Вам потрібно</h4>
+                              <button
+                                className='py-1 px-2 text-sm text-fuchsia-50 bg-sky-500 rounded hover:bg-sky-700 transition-all'
+                                onClick={() => loginWithRedirect()}
+                              >
+                                Увійти або Зареєструватися
+                              </button>
+                            </div>
+                          </Popup>
+                        )}
                         <Link to={`/products/${product.id}`}>
                           <button className='py-2 px-4 border rounded text-fuchsia-50 bg-yellow-500 hover:bg-yellow-700 transition-all'>
                             Опис
