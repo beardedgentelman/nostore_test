@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
-import { useAuth0 } from '@auth0/auth0-react'
 import { clearStore } from 'actions/clearStoreAction'
 import Auth0ProviderWithHistory from 'auth/auth0Provider'
 import { FooterContainer, HeaderContainer, MainContainer } from 'containers'
 import { CartPage, MainPage, ProductSinglePage, ProductsPage, ProfilePage } from 'pages'
-import { AuthRoute } from 'utiles/AuthRoute'
 import { PrivateRoutes } from 'utiles/PrivateRoutes'
 
 import { HeaderLogo, HeaderNav } from 'components'
