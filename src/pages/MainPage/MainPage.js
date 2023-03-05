@@ -14,7 +14,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
-import mainBanner from './../../assets/img/main-banner.webp'
+import mainBanner from '../../assets/img/main-banner.webp'
 
 import 'swiper/css'
 import 'animate.css'
