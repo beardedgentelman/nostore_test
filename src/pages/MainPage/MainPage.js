@@ -14,8 +14,6 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
-import mainBanner from './../../assets/img/main-banner.webp'
-
 import 'swiper/css'
 import 'animate.css'
 import './main-page.css'
@@ -41,7 +39,11 @@ const MainPage = () => {
     <>
       <section className='container mx-auto relative'>
         <div className='rounded-lg overflow-hidden'>
-          <img className='w-full' src={mainBanner} alt='main banner' />
+          <img
+            className='w-full'
+            src='https://img.freepik.com/free-vector/online-shopping-store-with-mobile-shopping-cart-mail-clouds-realistic-style-vector-illustration_548887-136.jpg?w=1380&t=st=1678014315~exp=1678014915~hmac=6062f4d3549cb53a92600d208d7705d9854feaca4015bf5d5ad77ef6183f39d2'
+            alt='main banner'
+          />
         </div>
         <div className='absolute top-1/3 left-40 animate__animated animate__backInLeft animate__delay-1s'>
           <h1 className='text-8xl text-gray-900 font-bold animate__animated animate__bounceInDown animate__delay-2s'>
